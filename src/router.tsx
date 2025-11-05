@@ -1,10 +1,7 @@
 // /src/router.tsx
 import { createBrowserRouter } from 'react-router-dom';
 
-import Chat from './pages/Chat';
-import Home from './pages/Home';
-import Report from './pages/Report';
-import ReportDetail from './pages/ReportDetail';
+import { Chat, Home, Report, ReportDetail } from './pages';
 
 export const router = createBrowserRouter([
   { path: '/', element: <Home /> },
