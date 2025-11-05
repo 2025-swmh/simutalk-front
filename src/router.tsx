@@ -1,6 +1,5 @@
 // /src/router.tsx
 import { createBrowserRouter } from 'react-router-dom';
-
 import { Chat, Home, Report, ReportDetail } from './pages';
 
 export const router = createBrowserRouter([
