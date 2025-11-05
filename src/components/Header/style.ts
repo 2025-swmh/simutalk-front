@@ -19,7 +19,5 @@ export const NavLinks = styled.nav`
 
 export const NavLink = styled.a<{ isActive: boolean }>`
   ${theme.font.title1};
-  color: ${theme.color.black};
-
-  ${({ isActive }) => isActive && `color: ${theme.color.orange[500]};`}
+  color: ${({ isActive }) => (isActive ? theme.color.orange[500] : theme.color.black)};
 `;
