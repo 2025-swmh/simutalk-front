@@ -1,5 +1,7 @@
+import EmptyReport from '../../components/EmptyReport';
+
 const Report = () => {
-  return <div>Report Page</div>;
+  return <EmptyReport />;
 };
 
 export default Report;
