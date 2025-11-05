@@ -2,12 +2,11 @@ import styled from '@emotion/styled';
 import { theme } from '../../styles';
 
 interface CategoryButtonProps {
-  isWide: boolean;
   bgColor: string;
 }
 
 export const CategoryButtonContainer = styled.button<CategoryButtonProps>`
-  width: ${({ isWide }) => (isWide ? '14.375rem' : '9.375rem')};
+  width: 14.375rem;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 1.875rem;
   height: 9.375rem;

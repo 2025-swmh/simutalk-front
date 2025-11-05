@@ -10,14 +10,12 @@ import type {
 export const mainCategories: Array<CategoryItem & { id: MainCategory }> = [
   {
     id: 'collaboration',
-    isWide: false,
     bgColor: theme.color.orange[600],
     icon: <People />,
     text: '협업 상황',
   },
   {
     id: 'interview',
-    isWide: false,
     bgColor: theme.color.orange[400],
     icon: <Paper />,
     text: '면접 상황',
@@ -32,21 +30,18 @@ export const subCategories: {
     {
       id: 'frontend',
       text: '프론트 개발자와의\n협업',
-      isWide: true,
       bgColor: theme.color.orange[500],
       icon: <People />,
     },
     {
       id: 'backend',
       text: '백엔드 개발자와의\n협업',
-      isWide: true,
       bgColor: theme.color.orange[600],
       icon: <People />,
     },
     {
       id: 'nondev',
       text: '비 개발자와의 협업',
-      isWide: true,
       bgColor: theme.color.orange[400],
       icon: <People />,
     },
@@ -55,21 +50,18 @@ export const subCategories: {
     {
       id: 'personality',
       text: '인성 면접',
-      isWide: true,
       bgColor: theme.color.orange[400],
       icon: <Paper />,
     },
     {
       id: 'frontend-tech',
       text: '프론트 기술 면접',
-      isWide: true,
       bgColor: theme.color.orange[500],
       icon: <Paper />,
     },
     {
       id: 'backend-tech',
       text: '백엔드 기술 면접',
-      isWide: true,
       bgColor: theme.color.orange[600],
       icon: <Paper />,
     },
