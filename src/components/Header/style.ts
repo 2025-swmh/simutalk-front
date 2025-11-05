@@ -18,7 +18,7 @@ export const NavLinks = styled.nav`
 `;
 
 export const NavLink = styled.a<{ isActive: boolean }>`
-  font-size: ${theme.font.title1};
+  ${theme.font.title1};
   color: ${theme.color.black};
 
   ${({ isActive }) => isActive && `color: ${theme.color.orange[500]};`}
