@@ -1,18 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
-import { Chat, Home, Report, ReportDetail } from './pages';
+import { router } from './router';
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/report" element={<Report />} />
-        <Route path="/report/:id" element={<ReportDetail />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
