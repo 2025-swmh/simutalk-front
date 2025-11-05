@@ -6,8 +6,12 @@ const GlobalStyle = () => (
     styles={css`
       ${emotionReset}
 
-      *, body {
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+      *,
+      body {
         font-family:
+          Pretendard,
           system-ui,
           -apple-system,
           BlinkMacSystemFont,
