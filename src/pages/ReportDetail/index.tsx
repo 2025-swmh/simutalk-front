@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Bad, Good, Report, Trophy } from '../../assets';
-import ReportFeedback from '../../components/Report/ReportDetail/ReportFeedback';
-import ReportSynergy from '../../components/Report/ReportDetail/ReportSynergy';
+import { ReportFeedback, ReportSynergy } from '../../components';
 import { basicApi } from '../../lib';
 import { theme } from '../../styles';
 import * as S from './style';
