@@ -21,7 +21,7 @@ const Header = () => {
       <S.NavLink to="/" isActive={pathname === '/'}>
         <Logo />
       </S.NavLink>
-      <S.NavLinks>
+      <S.NavWrapper>
         <S.NavLink to="/main" isActive={pathname === '/main'}>
           홈
         </S.NavLink>
@@ -32,7 +32,7 @@ const Header = () => {
         >
           보고서
         </S.NavLink>
-      </S.NavLinks>
+      </S.NavWrapper>
     </S.HeaderContainer>
   );
 };

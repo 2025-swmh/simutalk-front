@@ -148,7 +148,47 @@ const color = {
   white: '#FFFFFF',
 };
 
+const spacing = {
+  4: '4px',
+  8: '8px',
+  12: '12px',
+  16: '16px',
+  20: '20px',
+  24: '24px',
+  32: '32px',
+  40: '40px',
+  48: '48px',
+};
+
+const borderRadius = {
+  small: '4px',
+  medium: '8px',
+  large: '16px',
+  circle: '50%',
+};
+
+const shadows = {
+  subtle: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+  medium: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  large: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+};
+
+const breakpoints = {
+  mobile: '768px',
+  tablet: '1024px',
+};
+
+const mediaQueries = {
+  mobile: `(max-width: ${breakpoints.mobile})`,
+  tablet: `(max-width: ${breakpoints.tablet})`,
+};
+
 export const theme = {
   font,
   color,
+  spacing,
+  borderRadius,
+  shadows,
+  breakpoints,
+  mediaQueries,
 };

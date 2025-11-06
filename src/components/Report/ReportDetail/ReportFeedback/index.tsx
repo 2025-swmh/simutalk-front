@@ -1,5 +1,5 @@
 import { LandMark, Star } from '../../../../assets';
-import Container from '../../../Container';
+import { Flex } from '../../../ui';
 import * as S from './style';
 
 interface ReportFeedbackProps {
@@ -16,11 +16,14 @@ const ReportFeedback = ({
   positionRecommendation,
 }: ReportFeedbackProps) => {
   return (
-    <Container
+    <Flex
       width="63.25rem"
       display="flex"
-      gap="0.625rem"
-      padding="2rem 3.125rem 3.125rem 1.25rem"
+      gap={12}
+      paddingTop={32}
+      paddingRight={48}
+      paddingBottom={48}
+      paddingLeft={20}
     >
       <LandMark />
       <S.Wrapper>
@@ -45,7 +48,7 @@ const ReportFeedback = ({
           </S.RecommendContent>
         </S.FeedbackContents>
       </S.Wrapper>
-    </Container>
+    </Flex>
   );
 };
 

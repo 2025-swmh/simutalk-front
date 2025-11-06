@@ -3,19 +3,17 @@ import { Link } from 'react-router-dom';
 import { theme } from '../../styles/theme';
 
 export const HeaderContainer = styled.header`
-  margin: 0 0.625rem;
-  padding: 2.5938rem 3.125rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 40px 48px;
   background-color: #fff;
   border-bottom: 1px solid ${theme.color.zinc[200]};
-  box-sizing: border-box;
 `;
 
-export const NavLinks = styled.nav`
+export const NavWrapper = styled.nav`
   display: flex;
-  gap: 3rem;
+  gap: 48px;
 `;
 
 export const NavLink = styled(Link)<{ isActive: boolean }>`
