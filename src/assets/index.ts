@@ -4,3 +4,8 @@ export { default as RightArrow } from './RightArrow';
 export { default as People } from './People';
 export { default as Paper } from './Paper';
 export { default as Code } from './Code';
+export { default as LandMark } from './LandMark';
+export { default as Star } from './Star';
+export { default as Good } from './Good';
+export { default as Bad } from './Bad';
+export { default as Trophy } from './Trophy';
