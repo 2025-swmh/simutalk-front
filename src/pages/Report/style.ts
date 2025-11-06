@@ -22,3 +22,9 @@ export const Title = styled.div`
   text-align: left;
   width: 100%;
 `;
+
+export const ReportList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+`;
