@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Button, Input, TextArea } from '../../components';
 import { mainCategories, subCategories, techInterviewCategories } from '../../constants';
 import { useMainCategory } from '../../hooks';
@@ -6,7 +5,6 @@ import { getPageTitle } from '../../utils';
 import * as S from './style';
 
 const Main = () => {
-  const navigate = useNavigate();
   const {
     selectedCategory,
     selectedInterviewType,
@@ -118,9 +116,9 @@ const Main = () => {
               </S.InputLabel>
             )}
             <S.CategoryContainer isGrid={isGridLayout}>{renderCategories()}</S.CategoryContainer>
-            {!selectedCategory && (
+            {/* {!selectedCategory && (
               <S.RestartButton onClick={() => navigate('/start')}>다시 시작하기</S.RestartButton>
-            )}
+            )} */}
             {selectedCategory && (
               <S.PracticeButton onClick={handlePracticeButtonClick}>
                 연습하시고 싶은 상황이 있으시다면? <S.ColorPointer>→</S.ColorPointer>

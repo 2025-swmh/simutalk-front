@@ -1,82 +1,30 @@
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Bad, Good, Report, Trophy } from '../../assets';
 import { ReportFeedback, ReportSynergy } from '../../components';
-import { basicApi } from '../../lib';
+import { LOADING_MESSAGES } from '../../constants';
+import { useReportDetail } from '../../hooks';
 import { theme } from '../../styles';
+import type { EvaluationData } from '../../types';
+import {
+  parseActionPlans,
+  parseExampleStatements,
+  parseFeedbackDetails,
+} from '../../utils/textParser';
 import * as S from './style';
-
-interface ReportDetail {
-  id: number;
-  title: string;
-  evaluationJson: string;
-  typeKorean: string | null;
-  scoreRelationship: string | null;
-  scoreProblem: string | null;
-}
-
-interface Evaluation {
-  session_id: string;
-  title: string;
-  template_type: string;
-  collaboration_profile: {
-    type_korean: string;
-    type_english: string;
-    description_summary: string;
-    analysis_scores: {
-      relationship_contribution: string;
-      problem_leadership: string;
-    };
-  };
-  feedback: {
-    good_points: { area: string; detail: string }[];
-    improvement_points: { area: string; detail: string; action_plan: string }[];
-  };
-  appeal_recommendation: {
-    core_keywords: string[];
-    example_statements: { category: string; statement: string }[];
-  };
-}
 
 const ReportDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { report, isLoading, isError } = useReportDetail({ reportId: id });
 
-  const { data, isLoading, isError } = useQuery<ReportDetail>({
-    queryKey: ['reportDetail', id],
-    queryFn: async () => {
-      const res = await basicApi.get<ReportDetail>(`/report/${id}`);
-      return res.data;
-    },
-    enabled: !!id,
-  });
+  if (isLoading) return <div>{LOADING_MESSAGES.LOADING}</div>;
+  if (isError || !report) return <div>오류가 발생했습니다.</div>;
 
-  if (isLoading) return <div>불러오는 중...</div>;
-  if (isError || !data) return <div>오류가 발생했습니다.</div>;
+  const evaluation: EvaluationData = JSON.parse(report.evaluationJson);
 
-  // 👇 evaluationJson 문자열을 객체로 변환
-  const evaluation: Evaluation = JSON.parse(data.evaluationJson);
-
-  // desc 나누기 로직 추가
-  const splitByDot = (text: string) =>
-    text
-      .split('.')
-      .map((t) => t.trim())
-      .filter(Boolean)
-      .map((t) => t + '.'); // 마지막 점 다시 붙여줌
-
-  const goodPoints = evaluation.feedback.good_points.flatMap((p) => splitByDot(p.detail));
-
-  const improvementPoints = evaluation.feedback.improvement_points.flatMap((p) =>
-    splitByDot(p.detail),
-  );
-
-  const actionPlans = evaluation.feedback.improvement_points.flatMap((p) =>
-    splitByDot(p.action_plan),
-  );
-
-  const resumeTips = evaluation.appeal_recommendation.example_statements.flatMap((p) =>
-    splitByDot(p.statement),
-  );
+  const goodPoints = parseFeedbackDetails(evaluation.feedback.good_points);
+  const improvementPoints = parseFeedbackDetails(evaluation.feedback.improvement_points);
+  const actionPlans = parseActionPlans(evaluation.feedback.improvement_points);
+  const resumeTips = parseExampleStatements(evaluation.appeal_recommendation.example_statements);
 
   const reportData = [
     { title: '잘한 점', icon: <Good />, desc: goodPoints },

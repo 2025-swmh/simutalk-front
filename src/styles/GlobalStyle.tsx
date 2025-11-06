@@ -25,6 +25,19 @@ const GlobalStyle = () => (
           sans-serif;
       }
 
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
       a {
         text-decoration: none;
         color: inherit;
@@ -37,12 +50,15 @@ const GlobalStyle = () => (
         outline: none;
         background: inherit;
         cursor: pointer;
+        font-family: inherit;
       }
 
-      input {
+      input,
+      textarea {
         border: none;
         outline: none;
         background: inherit;
+        font-family: inherit;
       }
 
       input[type='number']::-webkit-outer-spin-button,
@@ -53,6 +69,7 @@ const GlobalStyle = () => (
 
       input[type='number'] {
         -moz-appearance: textfield;
+        appearance: textfield;
       }
     `}
   />

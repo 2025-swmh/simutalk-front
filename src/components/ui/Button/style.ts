@@ -66,21 +66,51 @@ const getVariantStyles = (
       return css`
         width: 14.375rem;
         height: 9.375rem;
-        background-color: ${finalBgColor};
+        background: linear-gradient(135deg, ${finalBgColor} 0%, ${colorPalette[700]} 100%);
         color: ${theme.color.white};
         flex-direction: column;
-        border-radius: 1.875rem;
+        border-radius: 1.5rem;
         box-shadow: ${theme.shadows.medium};
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+          opacity: 0;
+          transition: opacity ${theme.transitions.normal};
+        }
 
         & > span {
           ${theme.font.heading4};
           white-space: pre-line;
           text-align: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        & > svg {
+          position: relative;
+          z-index: 1;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         &:hover:not(:disabled) {
-          transform: translateY(-4px);
-          box-shadow: ${theme.shadows.large};
+          transform: translateY(-6px) scale(1.02);
+          box-shadow: ${theme.shadows.xl};
+
+          &::before {
+            opacity: 1;
+          }
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(-2px) scale(0.98);
         }
       `;
   }
@@ -111,12 +141,19 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   gap: ${theme.spacing[8]};
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all ${theme.transitions.normal};
   white-space: nowrap;
+  font-weight: 500;
+
+  &:focus-visible {
+    outline: 3px solid ${theme.color.orange[300]};
+    outline-offset: 2px;
+  }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+    filter: grayscale(0.3);
   }
 
   ${({ variant, color, colorShade, bgColor }) =>

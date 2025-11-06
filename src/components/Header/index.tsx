@@ -1,17 +1,20 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo';
+import { sessionStorage } from '../../utils';
 import * as S from './style';
 
 const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const sessionId = localStorage.getItem('sessionId'); // or useRecoilValue(...);
-
   const handleReportClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
+    const sessionId = sessionStorage.getSessionId();
+
     if (pathname.startsWith('/report/')) {
+      navigate('/report', { state: { sessionId } });
+    } else if (pathname !== '/report') {
       navigate('/report', { state: { sessionId } });
     }
   };

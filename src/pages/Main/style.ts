@@ -5,23 +5,44 @@ export const MainContainer = styled.main<{ isGrid?: boolean; showCustomForm?: bo
   min-height: calc(100vh - 7.0313rem);
   flex-direction: column;
   display: flex;
-  background-color: ${theme.color.white};
+  background: linear-gradient(to bottom, ${theme.color.zinc[50]} 0%, ${theme.color.white} 100%);
   padding-top: ${({ isGrid, showCustomForm }) =>
-    showCustomForm ? '14.5rem' : isGrid ? '11.625rem' : '16.875rem'};
+    showCustomForm ? '8rem' : isGrid ? '9rem' : '13.5rem'};
   align-items: center;
-  gap: ${({ showCustomForm }) => (showCustomForm ? '3.125rem' : '2rem')};
+  gap: ${({ showCustomForm }) => (showCustomForm ? '3.125rem' : '2.5rem')};
   box-sizing: border-box;
+  ${theme.animations.fadeIn}
+  animation: fadeIn 0.6s ease-out;
 `;
 
 export const Title = styled.h1`
   ${theme.font.heading2};
   color: ${theme.color.black};
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      ${theme.color.orange[600]} 0%,
+      ${theme.color.orange[400]} 100%
+    );
+    border-radius: 2px;
+  }
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.875rem;
+  gap: 2rem;
   align-items: center;
 `;
 
@@ -39,22 +60,31 @@ export const CategoryContainer = styled.div<{ isGrid?: boolean }>`
 `;
 
 export const RestartButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background-color: ${theme.color.zinc[100]};
+  padding: 0.875rem 1.75rem;
+  background-color: ${theme.color.white};
   color: ${theme.color.zinc[700]};
-  border: 1px solid ${theme.color.zinc[300]};
-  border-radius: 0.5rem;
+  border: 2px solid ${theme.color.zinc[200]};
+  border-radius: 0.75rem;
   ${theme.font.body1};
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all ${theme.transitions.normal};
+  box-shadow: ${theme.shadows.subtle};
 
   &:hover {
-    background-color: ${theme.color.zinc[200]};
-    border-color: ${theme.color.zinc[400]};
+    background-color: ${theme.color.zinc[50]};
+    border-color: ${theme.color.orange[400]};
+    color: ${theme.color.zinc[800]};
+    box-shadow: ${theme.shadows.medium};
+    transform: translateY(-2px);
   }
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${theme.color.orange[300]};
+    outline-offset: 2px;
   }
 `;
 
@@ -62,6 +92,28 @@ export const PracticeButton = styled.span`
   ${theme.font.title2};
   color: ${theme.color.black};
   cursor: pointer;
+  transition: all ${theme.transitions.normal};
+  position: relative;
+  padding: 0.5rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: ${theme.color.orange[600]};
+    transition: width ${theme.transitions.normal};
+  }
+
+  &:hover {
+    color: ${theme.color.orange[600]};
+
+    &::after {
+      width: 100%;
+    }
+  }
 `;
 
 export const ColorPointer = styled.span`
@@ -85,17 +137,17 @@ export const InputLabel = styled.label`
 
 export const Input = styled.input`
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   box-sizing: border-box;
-  border: 1px solid ${theme.color.zinc[200]}; // 1px
-  background-color: ${theme.color.zinc[50]};
-  border-radius: 0.5rem;
+  border: 2px solid ${theme.color.zinc[200]};
+  background-color: ${theme.color.white};
+  border-radius: 0.75rem;
   ${theme.font.body2};
-  transition: all 0.2s ease-in-out;
+  transition: all ${theme.transitions.normal};
   outline: none;
 
   &::placeholder {
-    color: ${theme.color.zinc[500]};
+    color: ${theme.color.zinc[400]};
   }
 
   &:focus {
@@ -110,24 +162,25 @@ export const Input = styled.input`
 
 export const Textarea = styled.textarea`
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   box-sizing: border-box;
-  border: 1px solid ${theme.color.zinc[200]}; // 1px
-  background-color: ${theme.color.zinc[50]};
-  border-radius: 0.5rem;
+  border: 2px solid ${theme.color.zinc[200]};
+  background-color: ${theme.color.white};
+  border-radius: 0.75rem;
   ${theme.font.body2};
-  min-height: 6.25rem;
+  min-height: 7rem;
   resize: vertical;
   outline: none;
-  transition: all 0.2s ease-in-out;
+  transition: all ${theme.transitions.normal};
+  line-height: 1.5;
 
   &::placeholder {
-    color: ${theme.color.zinc[500]};
+    color: ${theme.color.zinc[400]};
   }
 
   &:focus {
-    border-color: ${theme.color.orange[600]};
-    background-color: ${theme.color.white};
+    border-color: ${theme.color.orange[500]};
+    box-shadow: 0 0 0 3px ${theme.color.orange[100]};
   }
 
   &:hover:not(:focus) {
@@ -136,21 +189,33 @@ export const Textarea = styled.textarea`
 `;
 
 export const SubmitButton = styled.button`
-  margin-top: 0.5rem;
-  padding: 1rem;
-  background-color: ${theme.color.orange[600]};
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    135deg,
+    ${theme.color.orange[600]} 0%,
+    ${theme.color.orange[500]} 100%
+  );
   color: ${theme.color.white};
   border: none;
-  border-radius: 0.5rem; // 8px
+  border-radius: 0.75rem;
   ${theme.font.body1}
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: all ${theme.transitions.normal};
+  box-shadow: ${theme.shadows.medium};
 
   &:hover {
-    background-color: ${theme.color.orange[700]};
+    transform: translateY(-2px);
+    box-shadow: ${theme.shadows.large};
   }
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${theme.color.orange[300]};
+    outline-offset: 2px;
   }
 `;

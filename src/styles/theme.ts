@@ -171,6 +171,7 @@ const shadows = {
   subtle: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
   medium: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
   large: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+  xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
 };
 
 const breakpoints = {
@@ -183,6 +184,51 @@ const mediaQueries = {
   tablet: `(max-width: ${breakpoints.tablet})`,
 };
 
+const transitions = {
+  fast: '150ms ease-in-out',
+  normal: '250ms ease-in-out',
+  slow: '350ms ease-in-out',
+};
+
+const animations = {
+  fadeIn: `
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `,
+  slideUp: `
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `,
+  scaleIn: `
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  `,
+};
+
 export const theme = {
   font,
   color,
@@ -191,4 +237,6 @@ export const theme = {
   shadows,
   breakpoints,
   mediaQueries,
+  transitions,
+  animations,
 };

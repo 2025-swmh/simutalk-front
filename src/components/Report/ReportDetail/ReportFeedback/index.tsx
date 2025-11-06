@@ -5,8 +5,8 @@ import * as S from './style';
 interface ReportFeedbackProps {
   relationship?: string;
   problemSolving?: string;
-  synergyProfile?: string; // 유형 설명
-  positionRecommendation?: string; // 추천 포지션
+  synergyProfile?: string;
+  positionRecommendation?: string;
 }
 
 const ReportFeedback = ({
