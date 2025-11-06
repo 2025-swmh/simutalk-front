@@ -11,7 +11,7 @@ const Header = () => {
         <Logo />
       </Link>
       <S.NavLinks>
-        <S.NavLink href="/" isActive={pathname === '/'}>
+        <S.NavLink href="/main" isActive={pathname === '/main'}>
           홈
         </S.NavLink>
         <S.NavLink href="/report" isActive={pathname === '/report'}>
