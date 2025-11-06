@@ -1,0 +1,18 @@
+const Good = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_13_1083)">
+        <path d="M4 4H10L17 20H11L4 4Z" fill="#16A34A" />
+        <path d="M15 0H21L24 7H18L15 0Z" fill="#16A34A" />
+        <path d="M4 4H10L6 24H0L4 4Z" fill="#16A34A" />
+        <path d="M15 0L21 0L17 20H11L15 0Z" fill="#16A34A" />
+      </g>
+      <defs>
+        <clipPath id="clip0_13_1083">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+export default Good;
