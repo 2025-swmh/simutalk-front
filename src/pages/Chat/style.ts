@@ -69,3 +69,34 @@ export const ChatInput = styled.input`
   box-sizing: border-box;
   ${theme.font.body2}
 `;
+
+export const SpeechLabel = styled.div`
+  ${theme.font.body2};
+  color: ${theme.color.black};
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+`;
+
+export const UserSpeech = styled.div`
+  border-radius: 1rem;
+  ${theme.font.label2};
+  width: 33.125rem;
+  background-color: ${theme.color.zinc[50]};
+  padding: 1.25rem;
+  box-shadow:
+    0px 10px 15px 0 rgba(0, 0, 0, 0.1),
+    0px 4px 6px 0 rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+`;
+
+export const AiSpeech = styled.div`
+  ${theme.font.label2};
+  border-radius: 1rem;
+  width: 36.25rem;
+  background-color: ${theme.color.orange[50]};
+  padding: 1.25rem;
+  box-shadow:
+    0px 10px 15px 0 rgba(0, 0, 0, 0.1),
+    0px 4px 6px 0 rgba(0, 0, 0, 0.1);
+`;

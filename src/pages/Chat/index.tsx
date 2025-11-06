@@ -19,7 +19,13 @@ const Chat = () => {
         ))}
       </S.ChatListContainer>
       <S.RightColumn>
-        <S.ChatDetailContainer></S.ChatDetailContainer>
+        <S.ChatDetailContainer>
+          <S.SpeechLabel>
+            홍길동
+            <S.AiSpeech>안녕하세요! 무엇을 도와드릴까요?</S.AiSpeech>
+          </S.SpeechLabel>
+          <S.UserSpeech>안녕하세요! 프론트엔드 개발자와의 협업에 대해 이야기해봐요.</S.UserSpeech>
+        </S.ChatDetailContainer>
         <S.InputContainer>
           <S.ChatInput placeholder="여기에 입력해주세요." />
           <S.SendButton>
