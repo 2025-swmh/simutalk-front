@@ -10,3 +10,5 @@ export { default as Good } from './Good';
 export { default as Bad } from './Bad';
 export { default as Trophy } from './Trophy';
 export { default as Description } from './Description';
+export { default as Pencil } from './Pencil';
+export { default as Check } from './Check';
