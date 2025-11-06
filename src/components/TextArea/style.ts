@@ -7,7 +7,7 @@ const { color, font } = theme;
 export const TextAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem; // 8px
   align-items: start;
 `;
 
@@ -18,12 +18,12 @@ export const Label = styled.label`
 
 export const TextAreaContent = styled.textarea<Pick<ITextAreaType, 'height' | 'state'>>`
   width: 100%;
-  height: ${({ height }) => height}px;
-  padding: 14px 16px;
+  height: ${({ height }) => (height ? `${height / 16}rem` : 'auto')};
+  padding: 0.875rem 1rem; // 14px 16px
   font: ${font.body2};
-  border: 1px solid ${({ state }) => (state === 'error' ? color.red[500] : color.zinc[200])};
+  border: 1px solid ${({ state }) => (state === 'error' ? color.red[500] : color.zinc[200])}; // 1px
   background-color: ${({ state }) => (state === 'error' ? color.red[50] : color.zinc[50])};
-  border-radius: 8px;
+  border-radius: 0.5rem; // 8px
   resize: none;
   font-family: 'Pretendard', sans-serif;
   ::placeholder {
@@ -31,6 +31,6 @@ export const TextAreaContent = styled.textarea<Pick<ITextAreaType, 'height' | 's
     font: ${font.body2};
   }
   :focus {
-    outline: 1px solid ${({ state }) => (state === 'error' ? color.red[400] : color.orange[300])};
+    outline: 1px solid ${({ state }) => (state === 'error' ? color.red[400] : color.orange[300])}; // 1px
   }
 `;

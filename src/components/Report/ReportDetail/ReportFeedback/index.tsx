@@ -16,7 +16,12 @@ const ReportFeedback = ({
   positionRecommendation,
 }: ReportFeedbackProps) => {
   return (
-    <Container width="1012px" display="flex" gap="10px" padding="32px 50px 50px 20px">
+    <Container
+      width="63.25rem"
+      display="flex"
+      gap="0.625rem"
+      padding="2rem 3.125rem 3.125rem 1.25rem"
+    >
       <LandMark />
       <S.Wrapper>
         <S.FeedbackTitle>사용자님의 협업 유형</S.FeedbackTitle>

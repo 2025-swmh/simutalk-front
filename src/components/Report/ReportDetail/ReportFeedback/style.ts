@@ -4,7 +4,7 @@ import { theme } from '../../../../styles';
 export const FeedbackTitle = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem; // 20px
   ${theme.font.title1}
 `;
 
@@ -14,12 +14,12 @@ export const FeedbackContents = styled.div`
   gap: 0.875rem;
 `;
 export const SynergyContent = styled.div`
-  border: 1px solid ${theme.color.blue[200]};
-  padding: 20px 50px 20px 20px;
-  border-radius: 20px;
+  border: 1px solid ${theme.color.blue[200]}; // 1px
+  padding: 1.25rem 3.125rem 1.25rem 1.25rem; // 20px 50px 20px 20px
+  border-radius: 1.25rem; // 20px
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.9375rem; // 15px
 `;
 
 export const SynergyTitle = styled.div`
@@ -29,7 +29,7 @@ export const SynergyTitle = styled.div`
   ${theme.font.title4}
   > span {
     display: flex;
-    gap: 15px;
+    gap: 0.9375rem; // 15px
   }
 `;
 
@@ -39,24 +39,24 @@ export const SynergyDescription = styled.div`
 `;
 
 export const Synergylevel = styled.div`
-  padding: 1px 13px;
+  padding: 0.0625rem 0.8125rem; // 1px 13px
   background-color: ${theme.color.blue[900]};
   ${theme.font.label2}
   color: ${theme.color.white};
-  border-radius: 8px;
+  border-radius: 0.5rem; // 8px
 `;
 export const RecommendContent = styled.div`
-  border: 1px solid ${theme.color.blue[200]};
-  border-radius: 20px;
+  border: 1px solid ${theme.color.blue[200]}; // 1px
+  border-radius: 1.25rem; // 20px
   display: flex;
   gap: 0.875rem;
-  padding: 30px 0px 40px 20px;
+  padding: 1.875rem 0rem 2.5rem 1.25rem; // 30px 0px 40px 20px
 `;
 
 export const REcommendTitle = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.9375rem; // 15px
   ${theme.font.title1}
   >span {
     ${theme.font.title3}
@@ -66,5 +66,5 @@ export const REcommendTitle = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem; // 16px
 `;

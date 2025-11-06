@@ -52,7 +52,7 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 706px;
+  width: 44.125rem; // 706px
 `;
 
 export const InputLabel = styled.label`
@@ -67,7 +67,7 @@ export const Input = styled.input`
   width: 100%;
   padding: 0.75rem;
   box-sizing: border-box;
-  border: 1px solid ${theme.color.zinc[200]};
+  border: 1px solid ${theme.color.zinc[200]}; // 1px
   background-color: ${theme.color.zinc[50]};
   border-radius: 0.5rem;
   ${theme.font.body2};
@@ -79,7 +79,7 @@ export const Input = styled.input`
 
 export const Textarea = styled.textarea`
   padding: 0.75rem;
-  border: 1px solid ${theme.color.zinc[200]};
+  border: 1px solid ${theme.color.zinc[200]}; // 1px
   background-color: ${theme.color.zinc[50]};
   border-radius: 0.5rem;
   ${theme.font.body2};
@@ -97,7 +97,7 @@ export const SubmitButton = styled.button`
   background-color: ${theme.color.orange[600]};
   color: ${theme.color.white};
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem; // 8px
   ${theme.font.body1};
   cursor: pointer;
 
