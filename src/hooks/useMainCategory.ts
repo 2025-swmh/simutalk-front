@@ -38,23 +38,13 @@ export const useMainCategory = () => {
 
       console.log('Template set successfully:', template);
 
-      // 그 다음 question start 요청
-      const questionStartBody: { session_id: string; scenario?: string } = {
-        session_id: sessionId,
-      };
-
-      // cooperation일 때만 scenario 추가
-      if (template === 'cooperation' && scenario) {
-        questionStartBody.scenario = scenario;
-      }
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_AI_API_URL}/api/v1/question/start`,
-        questionStartBody,
-      );
-
-      console.log('Question start response:', response.data);
-      navigate('/chat');
+      // scenario 정보를 Chat 페이지로 전달
+      navigate('/chat', {
+        state: {
+          sessionId: sessionId,
+          scenario: scenario || template,
+        },
+      });
     } catch (error) {
       console.error('Question request failed:', error);
       if (axios.isAxiosError(error) && error.response?.status === 400) {

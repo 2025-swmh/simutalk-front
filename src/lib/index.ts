@@ -1,2 +1,2 @@
 export { default as Provider } from './provider';
-export * from './axiosInstance';
+export * from './api';
