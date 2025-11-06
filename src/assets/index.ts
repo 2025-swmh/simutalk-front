@@ -9,3 +9,4 @@ export { default as Star } from './Star';
 export { default as Good } from './Good';
 export { default as Bad } from './Bad';
 export { default as Trophy } from './Trophy';
+export { default as Description } from './Description';
