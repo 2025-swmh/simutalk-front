@@ -76,7 +76,7 @@ const Chat = () => {
     onSuccess: () => {
       toast.success('채팅이 종료되었습니다. 평가 페이지로 이동합니다.');
       // TODO: 평가 페이지로 이동
-      navigate('/report');
+      navigate('/report', { state: { sessionId } });
     },
     onError: () => {
       toast.error('채팅 종료 중 오류가 발생했습니다.');
@@ -207,7 +207,7 @@ const Chat = () => {
               disabled={
                 endChatMutation.isPending ||
                 !sessionId ||
-                messages.filter((msg) => msg.type === 'user').length < 5
+                messages.filter((msg) => msg.type === 'user').length < 3
               }
             >
               채팅 그만하기 <S.ColorPointer>→</S.ColorPointer>
