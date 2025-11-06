@@ -30,10 +30,10 @@ const ReportSynergy = ({ icon, title, description }: Props) => {
 
   return (
     <Container
-      width="1012px"
+      width="63.25rem"
       display="flex"
-      gap="16px"
-      padding="32px 0px 50px 20px"
+      gap="1rem"
+      padding="2rem 0rem 3.125rem 1.25rem"
       flexDirection="column"
     >
       <S.SynergyTitle>
