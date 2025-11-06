@@ -7,7 +7,7 @@ import * as S from './style';
 interface Props {
   icon?: ReactNode;
   title?: string;
-  description?: [string, string?] | undefined;
+  description?: string[] | undefined;
 }
 
 const ReportSynergy = ({ icon, title, description }: Props) => {
