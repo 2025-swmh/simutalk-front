@@ -56,11 +56,27 @@ const ReportDetail = () => {
   // 👇 evaluationJson 문자열을 객체로 변환
   const evaluation: Evaluation = JSON.parse(data.evaluationJson);
 
-  // 피드백 항목 추출
-  const goodPoints = evaluation.feedback.good_points.map((p) => p.detail);
-  const improvementPoints = evaluation.feedback.improvement_points.map((p) => p.detail);
-  const actionPlans = evaluation.feedback.improvement_points.map((p) => p.action_plan);
-  const resumeTips = evaluation.appeal_recommendation.example_statements.map((p) => p.statement);
+  // desc 나누기 로직 추가
+  const splitByDot = (text: string) =>
+    text
+      .split('.')
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .map((t) => t + '.'); // 마지막 점 다시 붙여줌
+
+  const goodPoints = evaluation.feedback.good_points.flatMap((p) => splitByDot(p.detail));
+
+  const improvementPoints = evaluation.feedback.improvement_points.flatMap((p) =>
+    splitByDot(p.detail),
+  );
+
+  const actionPlans = evaluation.feedback.improvement_points.flatMap((p) =>
+    splitByDot(p.action_plan),
+  );
+
+  const resumeTips = evaluation.appeal_recommendation.example_statements.flatMap((p) =>
+    splitByDot(p.statement),
+  );
 
   const reportData = [
     { title: '잘한 점', icon: <Good />, desc: goodPoints },

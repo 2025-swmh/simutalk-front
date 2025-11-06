@@ -44,23 +44,12 @@ const ReportSynergy = ({ icon, title, description }: Props) => {
           </S.SynergyTitle>
 
           <S.SynergyContents>
-            {description?.map((desc, idx) => {
-              const sentences = desc
-                .split('.')
-                .map((s) => s.trim())
-                .filter((s) => s.length > 0);
-
-              return (
-                <div key={idx}>
-                  {sentences.map((sentence, i) => (
-                    <S.SynergyContent key={i}>
-                      <Description color={color} />
-                      <span>{sentence}.</span>
-                    </S.SynergyContent>
-                  ))}
-                </div>
-              );
-            })}
+            {description?.map((desc, idx) => (
+              <S.SynergyContent key={idx}>
+                <Description color={color} />
+                <span>{desc}</span>
+              </S.SynergyContent>
+            ))}
           </S.SynergyContents>
         </S.SynergyContainer>
       </S.Wrapper>
