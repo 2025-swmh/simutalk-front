@@ -154,3 +154,40 @@ export const AiSpeech = styled.div`
     0px 2px 4px 0 rgba(0, 0, 0, 0.05);
   word-wrap: break-word;
 `;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+`;
+
+export const InputRow = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;
+
+export const EndChatButton = styled.button`
+  ${theme.font.title2};
+  color: ${theme.color.black};
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  padding: 0;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${theme.color.orange[600]};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
+export const ColorPointer = styled.span`
+  color: ${theme.color.orange[600]};
+`;

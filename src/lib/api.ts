@@ -33,4 +33,8 @@ export const chatApi = {
     const { data } = await aiApi.post<SendMessageResponse>('/api/v1/question/answer', request);
     return data;
   },
+
+  endChat: async (sessionId: string): Promise<void> => {
+    await aiApi.post('/api/v1/evaluation', { session_id: sessionId });
+  },
 };

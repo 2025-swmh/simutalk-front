@@ -70,6 +70,19 @@ const Chat = () => {
     mutationFn: chatApi.sendMessage,
   });
 
+  // 채팅 종료 mutation
+  const endChatMutation = useMutation({
+    mutationFn: chatApi.endChat,
+    onSuccess: () => {
+      toast.success('채팅이 종료되었습니다. 평가 페이지로 이동합니다.');
+      // TODO: 평가 페이지로 이동
+      navigate('/report');
+    },
+    onError: () => {
+      toast.error('채팅 종료 중 오류가 발생했습니다.');
+    },
+  });
+
   // 메시지 전송 성공 처리
   useEffect(() => {
     if (sendMessageMutation.isSuccess && sendMessageMutation.data) {
@@ -109,6 +122,15 @@ const Chat = () => {
       session_id: sessionId,
       message: userMessage,
     });
+  };
+
+  // 채팅 종료 핸들러
+  const handleEndChat = () => {
+    if (!sessionId) return;
+
+    if (window.confirm('채팅을 종료하시겠습니까?')) {
+      endChatMutation.mutate(sessionId);
+    }
   };
 
   // Enter 키 핸들러
@@ -154,19 +176,29 @@ const Chat = () => {
           <div ref={chatEndRef} />
         </S.ChatDetailContainer>
         <S.InputContainer>
-          <S.ChatInput
-            placeholder="여기에 입력해주세요."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            disabled={sendMessageMutation.isPending || !sessionId}
-          />
-          <S.SendButton
-            onClick={handleSendMessage}
-            disabled={sendMessageMutation.isPending || !sessionId || !inputValue.trim()}
-          >
-            <Check />
-          </S.SendButton>
+          <S.InputWrapper>
+            <S.InputRow>
+              <S.ChatInput
+                placeholder="여기에 입력해주세요."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                disabled={sendMessageMutation.isPending || !sessionId}
+              />
+              <S.SendButton
+                onClick={handleSendMessage}
+                disabled={sendMessageMutation.isPending || !sessionId || !inputValue.trim()}
+              >
+                <Check />
+              </S.SendButton>
+            </S.InputRow>
+            <S.EndChatButton
+              onClick={handleEndChat}
+              disabled={endChatMutation.isPending || !sessionId}
+            >
+              채팅 그만하기 <S.ColorPointer>→</S.ColorPointer>
+            </S.EndChatButton>
+          </S.InputWrapper>
         </S.InputContainer>
       </S.ChatContent>
     </S.ChatContainer>

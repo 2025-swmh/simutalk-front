@@ -27,3 +27,7 @@ export interface SendMessageResponse {
   template_id: string;
   timestamp: string;
 }
+
+export interface EvaluationRequest {
+  session_id: string;
+}
