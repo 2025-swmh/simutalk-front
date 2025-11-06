@@ -1,6 +1,7 @@
 export type MainCategory = 'collaboration' | 'interview';
 export type CollaborationSubCategory = 'frontend' | 'backend' | 'nondev';
-export type InterviewSubCategory = 'personality' | 'frontend-tech' | 'backend-tech';
+export type InterviewSubCategory = 'personality' | 'tech';
+export type TechInterviewSubCategory = 'frontend' | 'backend' | 'design' | 'planning';
 
 export interface CategoryItem {
   id: string;
