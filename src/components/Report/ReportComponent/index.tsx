@@ -1,5 +1,6 @@
 import { Report, RightArrow } from '../../../assets';
 import { theme } from '../../../styles';
+import Container from '../../Container';
 import * as S from './style';
 
 interface ReportComponentProps {
@@ -16,7 +17,14 @@ const ReportComponent = ({
   problemSolving,
 }: ReportComponentProps) => {
   return (
-    <S.ReportContainer>
+    <Container
+      width="70rem"
+      padding="2.5rem 1.875rem 2.5rem 1.0625rem"
+      display="flex"
+      flexDirection="column"
+      gap="0.625rem"
+      hoverEffect={true}
+    >
       <S.ReportHeader>
         <S.ReportTitle>
           <Report color={theme.color.zinc[500]} />
@@ -34,7 +42,7 @@ const ReportComponent = ({
           <S.AblityContainer level={problemSolving}>{problemSolving}</S.AblityContainer>
         </span>
       </S.ReportContents>
-    </S.ReportContainer>
+    </Container>
   );
 };
 
