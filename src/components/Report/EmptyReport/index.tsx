@@ -1,0 +1,13 @@
+import { Report } from '../../../assets';
+import { theme } from '../../../styles';
+import * as S from './style';
+
+const EmptyReport = () => {
+  return (
+    <S.EmptyReportContainer>
+      <Report size="50" color={theme.color.zinc[500]} />
+      <span>아직 생성된 보고서가 없습니다</span>
+    </S.EmptyReportContainer>
+  );
+};
+export default EmptyReport;
