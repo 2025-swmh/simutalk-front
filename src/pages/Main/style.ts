@@ -98,7 +98,7 @@ export const SubmitButton = styled.button`
   color: ${theme.color.white};
   border: none;
   border-radius: 0.5rem; // 8px
-  ${theme.font.body1};
+  ${theme.font.body1}
   cursor: pointer;
 
   &:hover {
