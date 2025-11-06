@@ -1,24 +1,24 @@
 import styled from '@emotion/styled';
 import { theme } from '../../styles/theme';
 
-export const ChatListItemContainer = styled.div`
-  width: 100%;
-  height: 5rem;
-  padding: 1.125rem 1.25rem 1.125rem 1.5625rem;
+export const ChatListContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px 16px 24px;
   background-color: ${theme.color.orange[50]};
   border-bottom: 1px solid ${theme.color.zinc[300]};
-  box-sizing: border-box;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  height: 80px;
+  box-sizing: border-box;
 `;
 
-export const ChatInfo = styled.div`
+export const ChatContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-width: 0;
+  flex: 1;
 `;
 
 export const ChatName = styled.span`

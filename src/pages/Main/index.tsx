@@ -1,12 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { CategoryButton } from '../../components';
+import { Button, Input, TextArea } from '../../components';
 import { mainCategories, subCategories, techInterviewCategories } from '../../constants';
 import { useMainCategory } from '../../hooks';
 import { getPageTitle } from '../../utils';
 import * as S from './style';
 
 const Main = () => {
-  const navigate = useNavigate();
   const {
     selectedCategory,
     selectedInterviewType,
@@ -28,36 +26,42 @@ const Main = () => {
   const renderCategories = () => {
     if (!selectedCategory) {
       return mainCategories.map((item) => (
-        <CategoryButton
+        <Button
           key={item.id}
+          variant="category"
           bgColor={item.bgColor}
           icon={item.icon}
-          text={item.text}
           onClick={() => handleMainCategoryClick(item.id)}
-        />
+        >
+          {item.text}
+        </Button>
       ));
     }
 
     if (selectedCategory === 'interview' && selectedInterviewType === 'tech') {
       return techInterviewCategories.map((item) => (
-        <CategoryButton
+        <Button
           key={item.id}
+          variant="category"
           bgColor={item.bgColor}
           icon={item.icon}
-          text={item.text}
           onClick={() => handleTechInterviewClick(item.id)}
-        />
+        >
+          {item.text}
+        </Button>
       ));
     }
 
     return subCategories[selectedCategory].map((item) => (
-      <CategoryButton
+      <Button
         key={item.id}
+        variant="category"
         bgColor={item.bgColor}
         icon={item.icon}
-        text={item.text}
         onClick={() => handleSubCategoryClick(item.id)}
-      />
+      >
+        {item.text}
+      </Button>
     ));
   };
 
@@ -69,7 +73,7 @@ const Main = () => {
           <S.FormContainer>
             <S.InputLabel>
               나의 역할
-              <S.Input
+              <Input
                 type="text"
                 placeholder="예: 프론트엔드 개발자"
                 value={customRole}
@@ -79,7 +83,7 @@ const Main = () => {
 
             <S.InputLabel>
               상황 제목
-              <S.Input
+              <Input
                 type="text"
                 placeholder="제목을 입력해 주세요."
                 value={customTitle}
@@ -89,7 +93,7 @@ const Main = () => {
 
             <S.InputLabel>
               상황 설명
-              <S.Textarea
+              <TextArea
                 placeholder="상황을 설명해 주세요."
                 value={customDescription}
                 onChange={(e) => setCustomDescription(e.target.value)}
@@ -103,7 +107,7 @@ const Main = () => {
             {selectedCategory === 'collaboration' && (
               <S.InputLabel>
                 나의 역할
-                <S.Input
+                <Input
                   type="text"
                   placeholder="예: 프론트엔드 개발자"
                   value={customRole}
@@ -112,9 +116,9 @@ const Main = () => {
               </S.InputLabel>
             )}
             <S.CategoryContainer isGrid={isGridLayout}>{renderCategories()}</S.CategoryContainer>
-            {!selectedCategory && (
+            {/* {!selectedCategory && (
               <S.RestartButton onClick={() => navigate('/start')}>다시 시작하기</S.RestartButton>
-            )}
+            )} */}
             {selectedCategory && (
               <S.PracticeButton onClick={handlePracticeButtonClick}>
                 연습하시고 싶은 상황이 있으시다면? <S.ColorPointer>→</S.ColorPointer>

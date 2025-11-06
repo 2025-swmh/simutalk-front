@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Description } from '../../../../assets';
 import { theme } from '../../../../styles/theme';
-import Container from '../../../Container';
+import { Flex } from '../../../ui';
 import * as S from './style';
 
 interface Props {
@@ -29,11 +29,13 @@ const ReportSynergy = ({ icon, title, description }: Props) => {
   const color = getColorByTitle(title);
 
   return (
-    <Container
+    <Flex
       width="63.25rem"
       display="flex"
-      gap="1rem"
-      padding="2rem 0rem 3.125rem 1.25rem"
+      gap={16}
+      paddingTop={32}
+      paddingBottom={48}
+      paddingLeft={20}
       flexDirection="column"
     >
       <S.Wrapper>
@@ -53,7 +55,7 @@ const ReportSynergy = ({ icon, title, description }: Props) => {
           </S.SynergyContents>
         </S.SynergyContainer>
       </S.Wrapper>
-    </Container>
+    </Flex>
   );
 };
 

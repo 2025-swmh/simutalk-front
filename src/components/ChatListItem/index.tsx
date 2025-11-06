@@ -8,15 +8,15 @@ interface ChatListItemProps {
 
 const ChatListItem = ({ name, message }: ChatListItemProps) => {
   return (
-    <S.ChatListItemContainer>
+    <S.ChatListContainer>
       <Profile />
-      <S.ChatInfo>
+      <S.ChatContent>
         <S.ChatName>{name || '홍길동'}</S.ChatName>
         <S.ChatMessage>
           {message || '안녕하세요! 만나서 반갑습니다. 제 이름은 홍길동입니다.'}
         </S.ChatMessage>
-      </S.ChatInfo>
-    </S.ChatListItemContainer>
+      </S.ChatContent>
+    </S.ChatListContainer>
   );
 };
 

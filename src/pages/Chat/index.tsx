@@ -1,169 +1,49 @@
-import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 import { Check } from '../../assets';
-import { chatApi } from '../../lib/api';
-import type { ChatMessage } from '../../types';
+import { Spinner } from '../../components';
+import { CHAT_CONFIG, LOADING_MESSAGES } from '../../constants';
+import { useChat } from '../../hooks';
 import * as S from './style';
 
 const Chat = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [sessionId, setSessionId] = useState<string>('');
-  const chatEndRef = useRef<HTMLDivElement>(null);
-
-  // URL state에서 sessionId와 scenario 가져오기
-  const stateSessionId = location.state?.sessionId;
+  const sessionId = location.state?.sessionId;
   const scenario = location.state?.scenario;
 
-  // sessionId와 scenario가 없으면 메인으로 리다이렉트
-  useEffect(() => {
-    if (!stateSessionId || !scenario) {
-      toast.error('잘못된 접근입니다. 메인 페이지에서 시작해주세요.');
-      navigate('/main');
-    }
-  }, [stateSessionId, scenario, navigate]);
-
-  // 채팅 시작 API 호출
   const {
-    data: startChatData,
-    isLoading: isStarting,
-    isError: isStartError,
-  } = useQuery({
-    queryKey: ['startChat', stateSessionId, scenario],
-    queryFn: () =>
-      chatApi.startChat({
-        session_id: stateSessionId,
-        scenario: scenario,
-      }),
-    refetchOnWindowFocus: false,
-    retry: 1,
-    enabled: !!stateSessionId && !!scenario,
-  });
+    messages,
+    inputValue,
+    sessionId: currentSessionId,
+    isStarting,
+    chatEndRef,
+    isSending,
+    isEnding,
+    setInputValue,
+    handleSendMessage,
+    handleEndChat,
+    handleKeyPress,
+  } = useChat({ sessionId, scenario });
 
-  // 채팅 시작 데이터 처리
-  useEffect(() => {
-    if (startChatData) {
-      setSessionId(startChatData.session_id);
-      setMessages([
-        {
-          type: 'ai',
-          message: startChatData.message,
-          timestamp: startChatData.timestamp,
-        },
-      ]);
-    }
-  }, [startChatData]);
-
-  // 채팅 시작 에러 처리
-  useEffect(() => {
-    if (isStartError) {
-      toast.error('채팅을 시작하는 중 오류가 발생했습니다.');
-    }
-  }, [isStartError]);
-
-  // 메시지 전송 mutation
-  const sendMessageMutation = useMutation({
-    mutationFn: chatApi.sendMessage,
-  });
-
-  // 채팅 종료 mutation
-  const endChatMutation = useMutation({
-    mutationFn: chatApi.endChat,
-    onSuccess: () => {
-      toast.success('채팅이 종료되었습니다. 평가 페이지로 이동합니다.');
-      // TODO: 평가 페이지로 이동
-      navigate('/report', { state: { sessionId } });
-    },
-    onError: () => {
-      toast.error('채팅 종료 중 오류가 발생했습니다.');
-    },
-  });
-
-  // 메시지 전송 성공 처리
-  useEffect(() => {
-    if (sendMessageMutation.isSuccess && sendMessageMutation.data) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          type: 'ai',
-          message: sendMessageMutation.data.message,
-          timestamp: sendMessageMutation.data.timestamp,
-        },
-      ]);
-    }
-  }, [sendMessageMutation.isSuccess, sendMessageMutation.data]);
-
-  // 메시지 전송 에러 처리
-  useEffect(() => {
-    if (sendMessageMutation.isError) {
-      toast.error('메시지를 전송하는 중 오류가 발생했습니다.');
-    }
-  }, [sendMessageMutation.isError]);
-
-  // 메시지 전송 핸들러
-  const handleSendMessage = () => {
-    if (!inputValue.trim() || !sessionId) return;
-
-    const userMessage = inputValue.trim();
-    setMessages((prev) => [
-      ...prev,
-      {
-        type: 'user',
-        message: userMessage,
-      },
-    ]);
-    setInputValue('');
-
-    sendMessageMutation.mutate({
-      session_id: sessionId,
-      message: userMessage,
-    });
-  };
-
-  // 채팅 종료 핸들러
-  const handleEndChat = () => {
-    if (!sessionId) return;
-
-    // 사용자 메시지 개수 확인
-    const userMessageCount = messages.filter((msg) => msg.type === 'user').length;
-
-    if (userMessageCount < 3) {
-      toast.warning(
-        `최소 3개의 메시지를 보내야 채팅을 종료할 수 있습니다. (현재: ${userMessageCount}개)`,
-      );
-      return;
-    }
-
-    if (window.confirm('채팅을 종료하시겠습니까?')) {
-      endChatMutation.mutate(sessionId);
-    }
-  };
-
-  // Enter 키 핸들러
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  // 자동 스크롤
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const userMessageCount = messages.filter((msg) => msg.type === 'user').length;
+  const canEndChat = userMessageCount >= CHAT_CONFIG.MIN_MESSAGE_COUNT;
 
   return (
     <S.ChatContainer>
+      {isEnding && (
+        <S.LoadingOverlay>
+          <S.LoadingContent>
+            <Spinner size="large" color="orange" />
+            <S.LoadingText>보고서를 생성하고 있습니다...</S.LoadingText>
+            <S.LoadingSubText>잠시만 기다려주세요</S.LoadingSubText>
+          </S.LoadingContent>
+        </S.LoadingOverlay>
+      )}
       <S.ChatContent>
         <S.ChatDetailContainer>
           {isStarting ? (
             <S.SpeechLabel>
               AI
-              <S.AiSpeech>채팅을 시작하는 중...</S.AiSpeech>
+              <S.AiSpeech>{LOADING_MESSAGES.CHAT_STARTING}</S.AiSpeech>
             </S.SpeechLabel>
           ) : (
             messages.map((msg, index) =>
@@ -177,10 +57,10 @@ const Chat = () => {
               ),
             )
           )}
-          {sendMessageMutation.isPending && (
+          {isSending && (
             <S.SpeechLabel>
               AI
-              <S.AiSpeech>답변을 생성하는 중...</S.AiSpeech>
+              <S.AiSpeech>{LOADING_MESSAGES.AI_GENERATING}</S.AiSpeech>
             </S.SpeechLabel>
           )}
           <div ref={chatEndRef} />
@@ -193,22 +73,18 @@ const Chat = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                disabled={sendMessageMutation.isPending || !sessionId}
+                disabled={isSending || !currentSessionId}
               />
               <S.SendButton
                 onClick={handleSendMessage}
-                disabled={sendMessageMutation.isPending || !sessionId || !inputValue.trim()}
+                disabled={isSending || !currentSessionId || !inputValue.trim()}
               >
                 <Check />
               </S.SendButton>
             </S.InputRow>
             <S.EndChatButton
               onClick={handleEndChat}
-              disabled={
-                endChatMutation.isPending ||
-                !sessionId ||
-                messages.filter((msg) => msg.type === 'user').length < 3
-              }
+              disabled={isEnding || !currentSessionId || !canEndChat}
             >
               채팅 그만하기 <S.ColorPointer>→</S.ColorPointer>
             </S.EndChatButton>

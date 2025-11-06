@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
-import { theme } from '../../styles';
+import { theme } from '../../../styles/theme';
 
-const { color, font } = theme;
+const { color, font, spacing, borderRadius } = theme;
 
 export const inputWrapperStyles = css`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${spacing[8]};
 `;
 
 export const labelStyles = css`
-  font: ${font.body1};
+  ${font.body1};
   color: ${color.zinc[800]};
 `;
 
@@ -22,16 +22,16 @@ export const inputContainerStyles = css`
 
 export const baseInputStyles = css`
   width: 100%;
-  padding: 14px 16px;
+  padding: ${spacing[12]} ${spacing[16]};
   border: none;
   outline: none;
-  font: ${font.body2};
+  ${font.body2};
   transition: all 0.2s ease-in-out;
-  border-radius: 8px;
+  border-radius: ${borderRadius.medium};
 
   &::placeholder {
     color: ${color.zinc[500]};
-    font: ${font.body2};
+    ${font.body2};
   }
 
   &:disabled {
@@ -55,14 +55,14 @@ export const baseInputStyles = css`
 export const variantStyles = {
   default: css`
     background-color: ${color.zinc[50]};
-    border: 1px solid ${color.zinc[200]};
+    border: 1px solid ${color.zinc[300]};
 
     &:focus {
-      border: 1px solid ${color.orange[300]};
+      border: 1px solid ${color.orange[500]};
     }
 
     &:hover:not(:disabled):not(:focus) {
-      border-color: ${color.zinc[100]};
+      border-color: ${color.zinc[400]};
     }
   `,
 };
@@ -74,7 +74,7 @@ export const stateStyles = {
 
     &:focus {
       border-color: ${color.red[500]} !important;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+      box-shadow: 0 0 0 3px ${color.red[100]} !important;
     }
   `,
 };
@@ -92,33 +92,33 @@ export const iconStyles = css`
 
 export const startIconStyles = css`
   ${iconStyles}
-  left: 12px;
+  left: ${spacing[12]};
 `;
 
 export const endIconStyles = css`
   ${iconStyles}
-  right: 12px;
+  right: ${spacing[12]};
 `;
 
 export const rightTextStyles = css`
-  font: ${font.title4};
-  color: ${color.black};
+  ${font.body1};
+  color: ${color.zinc[700]};
 `;
 
 export const inputWithStartIconStyles = css`
-  padding-left: 40px;
+  padding-left: ${spacing[40]};
 `;
 
 export const inputWithEndIconStyles = css`
-  padding-right: 40px;
+  padding-right: ${spacing[40]};
 `;
 
 export const helperTextStyles = css`
-  font: ${font.title4};
-  color: ${color.black};
+  ${font.label2};
+  color: ${color.zinc[600]};
 `;
 
 export const errorMessageStyles = css`
-  font-size: 12px;
+  ${font.label2};
   color: ${color.red[500]};
 `;

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Report, RightArrow } from '../../../assets';
 import { theme } from '../../../styles';
-import Container from '../../Container';
+import { Flex } from '../../ui';
 import * as S from './style';
 
 interface ReportComponentProps {
@@ -21,12 +21,15 @@ const ReportComponent = ({
 }: ReportComponentProps) => {
   const navigation = useNavigate();
   return (
-    <Container
+    <Flex
       width="70rem"
-      padding="2.5rem 1.875rem 2.5rem 1.0625rem"
+      paddingTop={40}
+      paddingRight={32}
+      paddingBottom={40}
+      paddingLeft={16}
       display="flex"
       flexDirection="column"
-      gap="0.625rem"
+      gap={12}
       hoverEffect={true}
       onClick={() => {
         navigation(`/report/${id}`);
@@ -49,7 +52,7 @@ const ReportComponent = ({
           <S.AblityContainer level={problemSolving}>{problemSolving}</S.AblityContainer>
         </span>
       </S.ReportContents>
-    </Container>
+    </Flex>
   );
 };
 

@@ -1,22 +1,22 @@
 import { Report } from '../../../assets';
 import { theme } from '../../../styles';
-import Container from '../../Container';
+import { EmptyState, Flex } from '../../ui';
 
 const EmptyReport = () => {
   return (
-    <Container
+    <Flex
       display="flex"
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      padding="0"
-      gap="2.875rem"
       width="70rem"
       height="18.5rem"
     >
-      <Report size="50" color={theme.color.zinc[500]} />
-      <span>아직 생성된 보고서가 없습니다</span>
-    </Container>
+      <EmptyState
+        icon={<Report size="50" color={theme.color.zinc[500]} />}
+        message="아직 생성된 보고서가 없습니다"
+      />
+    </Flex>
   );
 };
 export default EmptyReport;

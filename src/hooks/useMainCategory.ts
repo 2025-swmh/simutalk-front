@@ -2,12 +2,15 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '../constants';
+import { sessionApi } from '../lib/api';
 import type {
   CollaborationSubCategory,
   InterviewSubCategory,
   MainCategory,
   TechInterviewSubCategory,
 } from '../types';
+import { scenarioGenerator, sessionStorage, templateMapper } from '../utils';
 
 export const useMainCategory = () => {
   const navigate = useNavigate();
@@ -22,36 +25,32 @@ export const useMainCategory = () => {
 
   const sendQuestionRequest = async (template: string, scenario?: string) => {
     try {
-      const sessionId = localStorage.getItem('sessionId');
+      const sessionId = sessionStorage.getSessionId();
       if (!sessionId) {
-        console.error('Session ID not found in localStorage');
-        toast.error('세션을 찾을 수 없습니다. 다시 시작해주세요.');
+        console.error('Session ID not found');
+        toast.error(ERROR_MESSAGES.SESSION_NOT_FOUND);
         navigate('/start');
         return;
       }
 
-      // 먼저 template 설정 요청
-      await axios.post(`${import.meta.env.VITE_AI_API_URL}/api/v1/session/template`, {
-        session_id: sessionId,
-        template: template,
-      });
-
+      // Set template
+      await sessionApi.setTemplate(sessionId, template);
       console.log('Template set successfully:', template);
 
-      // scenario 정보를 Chat 페이지로 전달
+      // Navigate to chat with scenario
       navigate('/chat', {
         state: {
-          sessionId: sessionId,
+          sessionId,
           scenario: scenario || template,
         },
       });
     } catch (error) {
       console.error('Question request failed:', error);
       if (axios.isAxiosError(error) && error.response?.status === 400) {
-        toast.info('다시 시작해주세요.');
+        toast.info(INFO_MESSAGES.RESTART_REQUIRED);
         navigate('/start');
       } else {
-        toast.error('요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+        toast.error(ERROR_MESSAGES.REQUEST_FAILED);
       }
     }
   };
@@ -70,40 +69,40 @@ export const useMainCategory = () => {
     }
 
     if (selectedCategory === 'collaboration') {
-      const userRole = customRole || '개발자';
-      const collabScenarios: Record<CollaborationSubCategory, string> = {
-        frontend: `사용자는 ${userRole} 역할입니다. 당신은 주니어 프론트엔드 개발자 역할입니다. 사용자와 간단한 API 연동 작업에 대해 협업하려고 합니다. 어떤 데이터가 필요한지, API 주소는 어떻게 되는지 등 기본적인 것들을 쉽게 물어봐주세요. 처음 API를 사용할 때 궁금한 점들을 자연스럽게 질문해주세요.`,
-        backend: `사용자는 ${userRole} 역할입니다. 당신은 주니어 백엔드 개발자 역할입니다. 사용자와 간단한 API 개발에 대해 협업하려고 합니다. 어떤 기능이 필요한지, 데이터를 어떻게 저장할지 등 기본적인 내용을 쉽게 물어봐주세요. 복잡한 용어는 피하고 이해하기 쉬운 질문들로 대화를 진행해주세요.`,
-        nondev: `사용자는 ${userRole} 역할입니다. 당신은 기획자 또는 디자이너 역할입니다. 사용자와 프로젝트 기능에 대해 협업하려고 합니다. 사용자가 어떤 기능을 만들고 싶은지, 언제까지 가능한지 등 기본적인 것들을 물어봐주세요. 어려운 기술 용어는 쓰지 말고 일상적인 대화처럼 편하게 이야기해주세요.`,
-      };
-      const scenario = collabScenarios[subCategoryId as CollaborationSubCategory];
-      console.log('Selected category:', {
+      const scenario = scenarioGenerator.collaboration(
+        customRole,
+        subCategoryId as CollaborationSubCategory,
+      );
+      const template = templateMapper.collaboration();
+
+      console.log('Selected collaboration category:', {
         main: selectedCategory,
         sub: subCategoryId,
-        template: 'cooperation',
-        scenario,
+        template,
       });
-      await sendQuestionRequest('cooperation', scenario);
+
+      await sendQuestionRequest(template, scenario);
     } else if (selectedCategory === 'interview' && subCategoryId === 'personality') {
-      console.log('Selected category:', {
+      const template = templateMapper.interview.personality();
+
+      console.log('Selected personality interview:', {
         main: selectedCategory,
         sub: subCategoryId,
-        template: 'tenacity',
+        template,
       });
-      await sendQuestionRequest('tenacity');
+
+      await sendQuestionRequest(template);
     }
   };
 
   const handleTechInterviewClick = async (techCategoryId: TechInterviewSubCategory) => {
-    const templateMap: Record<TechInterviewSubCategory, string> = {
-      frontend: 'frontend',
-      backend: 'backend',
-      design: 'design',
-      planning: 'planning',
-    };
+    const template = templateMapper.interview.tech(techCategoryId);
 
-    const template = templateMap[techCategoryId];
-    console.log('Selected tech interview category:', { category: techCategoryId, template });
+    console.log('Selected tech interview category:', {
+      category: techCategoryId,
+      template,
+    });
+
     await sendQuestionRequest(template);
   };
 
@@ -112,16 +111,19 @@ export const useMainCategory = () => {
   };
 
   const handleSubmit = async () => {
-    const scenario = `사용자는 ${customRole} 역할입니다. 상황 제목: ${customTitle}. 상황 설명: ${customDescription}. 당신은 주니어 개발자 수준으로 쉽고 편하게 대화해주세요. 어려운 용어는 피하고, 기본적인 내용 위주로 자연스럽게 질문하고 답변해주세요.`;
+    const scenario = scenarioGenerator.custom(customRole, customTitle, customDescription);
+    const template = templateMapper.collaboration();
+
     console.log('Custom practice:', {
       role: customRole,
       title: customTitle,
       description: customDescription,
-      template: 'cooperation',
+      template,
     });
 
-    await sendQuestionRequest('cooperation', scenario);
+    await sendQuestionRequest(template, scenario);
 
+    // Reset form
     setShowCustomForm(false);
     setCustomRole('');
     setCustomTitle('');

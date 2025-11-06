@@ -3,7 +3,7 @@ import { theme } from '../../../../styles';
 
 export const SynergyTitle = styled.div`
   display: flex;
-  gap: 0.625rem; // 10px
+  gap: 0.625rem;
   ${theme.font.title1}
 `;
 export const SynergyContent = styled.div`
