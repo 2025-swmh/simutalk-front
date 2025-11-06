@@ -1,6 +1,7 @@
+import type { HTMLAttributes } from 'react';
 import * as S from './style';
 
-interface ContainerProps {
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   padding?: string;
   display?: string;
@@ -24,6 +25,7 @@ const Container = ({
   width,
   height,
   hoverEffect,
+  ...rest
 }: ContainerProps) => {
   return (
     <S.ContainerWrapper
@@ -36,6 +38,7 @@ const Container = ({
       width={width}
       height={height}
       hoverEffect={hoverEffect}
+      {...rest}
     >
       {children}
     </S.ContainerWrapper>
