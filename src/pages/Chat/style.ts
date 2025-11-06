@@ -77,12 +77,18 @@ export const SendButton = styled.button`
   flex-shrink: 0;
   transition: background-color 0.2s ease-in-out;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: ${theme.color.orange[700]};
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: ${theme.color.zinc[300]};
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 
@@ -102,9 +108,14 @@ export const ChatInput = styled.input`
     color: ${theme.color.zinc[400]};
   }
 
-  &:focus {
+  &:focus:not(:disabled) {
     border-color: ${theme.color.orange[600]};
     background-color: ${theme.color.white};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 
