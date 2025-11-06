@@ -1,41 +1,102 @@
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import { Bad, Good, Report, Trophy } from '../../assets';
 import ReportFeedback from '../../components/Report/ReportDetail/ReportFeedback';
 import ReportSynergy from '../../components/Report/ReportDetail/ReportSynergy';
+import { basicApi } from '../../lib';
 import { theme } from '../../styles';
 import * as S from './style';
 
+interface ReportDetail {
+  id: number;
+  title: string;
+  evaluationJson: string;
+  typeKorean: string | null;
+  scoreRelationship: string | null;
+  scoreProblem: string | null;
+}
+
+interface Evaluation {
+  session_id: string;
+  title: string;
+  template_type: string;
+  collaboration_profile: {
+    type_korean: string;
+    type_english: string;
+    description_summary: string;
+    analysis_scores: {
+      relationship_contribution: string;
+      problem_leadership: string;
+    };
+  };
+  feedback: {
+    good_points: { area: string; detail: string }[];
+    improvement_points: { area: string; detail: string; action_plan: string }[];
+  };
+  appeal_recommendation: {
+    core_keywords: string[];
+    example_statements: { category: string; statement: string }[];
+  };
+}
+
 const ReportDetail = () => {
-  const dummyDescriptions = [
-    '팀원들과의 원활한 소통으로 프로젝트 진행이 수월했습니다.',
-    '문제 해결 능력이 뛰어나 어려운 상황에서도 침착하게 대처했습니다.',
-    '더 적극적으로 의견을 제시하고 팀에 기여할 수 있는 방안을 모색해보세요.',
-    '백엔드 개발 경험과 협업 능력을 강조하여 어필하세요.',
-  ];
+  const { id } = useParams<{ id: string }>();
+
+  const { data, isLoading, isError } = useQuery<ReportDetail>({
+    queryKey: ['reportDetail', id],
+    queryFn: async () => {
+      const res = await basicApi.get<ReportDetail>(`/report/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
+
+  if (isLoading) return <div>불러오는 중...</div>;
+  if (isError || !data) return <div>오류가 발생했습니다.</div>;
+
+  // 👇 evaluationJson 문자열을 객체로 변환
+  const evaluation: Evaluation = JSON.parse(data.evaluationJson);
+
+  // 피드백 항목 추출
+  const goodPoints = evaluation.feedback.good_points.map((p) => p.detail);
+  const improvementPoints = evaluation.feedback.improvement_points.map((p) => p.detail);
+  const actionPlans = evaluation.feedback.improvement_points.map((p) => p.action_plan);
+  const resumeTips = evaluation.appeal_recommendation.example_statements.map((p) => p.statement);
+
   const reportData = [
-    { title: '잘한 점', icon: <Good />, desc: dummyDescriptions },
-    { title: '부족한 점', icon: <Bad /> },
-    { title: '개선 방법', icon: <Trophy /> },
-    { title: '이력서 어필 포인트', icon: <Report color={theme.color.orange[600]} /> },
+    { title: '잘한 점', icon: <Good />, desc: goodPoints },
+    { title: '부족한 점', icon: <Bad />, desc: improvementPoints },
+    { title: '개선 방법', icon: <Trophy />, desc: actionPlans },
+    {
+      title: '이력서 어필 포인트',
+      icon: <Report color={theme.color.orange[600]} />,
+      desc: resumeTips,
+    },
   ];
+
+  const profile = evaluation.collaboration_profile;
+
   return (
     <S.Wrapper>
       <S.ReportDetailContainer>
         <S.ReportTitle>
-          <div>백엔드 개발자와의 협업</div>
+          <div>{evaluation.title}</div>
           <span>종합 분석 보고서</span>
         </S.ReportTitle>
+
         <S.ReportContent>
           <ReportFeedback
-            relationship="상"
-            problemSolving="하"
-            synergyProfile="상황에서 감정적 언어를 최소화하고, 팀원들의 의견을 경청하고 통합하는 발언이 많음. 팀의 사기와 안정화에 가장 크게 기여."
-            positionRecommendation="중재자"
+            relationship={profile.analysis_scores.relationship_contribution}
+            problemSolving={profile.analysis_scores.problem_leadership}
+            synergyProfile={profile.description_summary}
+            positionRecommendation={profile.type_korean}
           />
+
           {reportData.map((item, idx) => (
             <ReportSynergy
+              key={item.title + idx}
               title={item.title}
               icon={item.icon}
-              key={item.title + idx}
               description={item.desc}
             />
           ))}

@@ -72,6 +72,7 @@ const Report = () => {
                 relationship={report.scoreRelationship as ReportGrade}
                 problemSolving={report.scoreProblem as ReportGrade}
                 synergyProfile={report.typeKorean}
+                id={report.id}
               />
             ))
           )}

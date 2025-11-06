@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Report, RightArrow } from '../../../assets';
 import { theme } from '../../../styles';
 import Container from '../../Container';
@@ -8,6 +9,7 @@ interface ReportComponentProps {
   synergyProfile: string;
   relationship: '상' | '중' | '하' | undefined;
   problemSolving: '상' | '중' | '하' | undefined;
+  id?: number;
 }
 
 const ReportComponent = ({
@@ -15,7 +17,9 @@ const ReportComponent = ({
   synergyProfile,
   relationship,
   problemSolving,
+  id,
 }: ReportComponentProps) => {
+  const navigation = useNavigate();
   return (
     <Container
       width="70rem"
@@ -24,6 +28,9 @@ const ReportComponent = ({
       flexDirection="column"
       gap="0.625rem"
       hoverEffect={true}
+      onClick={() => {
+        navigation(`/report/${id}`);
+      }}
     >
       <S.ReportHeader>
         <S.ReportTitle>
