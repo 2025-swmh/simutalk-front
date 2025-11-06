@@ -128,6 +128,16 @@ const Chat = () => {
   const handleEndChat = () => {
     if (!sessionId) return;
 
+    // 사용자 메시지 개수 확인
+    const userMessageCount = messages.filter((msg) => msg.type === 'user').length;
+
+    if (userMessageCount < 3) {
+      toast.warning(
+        `최소 3개의 메시지를 보내야 채팅을 종료할 수 있습니다. (현재: ${userMessageCount}개)`,
+      );
+      return;
+    }
+
     if (window.confirm('채팅을 종료하시겠습니까?')) {
       endChatMutation.mutate(sessionId);
     }
@@ -194,7 +204,11 @@ const Chat = () => {
             </S.InputRow>
             <S.EndChatButton
               onClick={handleEndChat}
-              disabled={endChatMutation.isPending || !sessionId}
+              disabled={
+                endChatMutation.isPending ||
+                !sessionId ||
+                messages.filter((msg) => msg.type === 'user').length < 5
+              }
             >
               채팅 그만하기 <S.ColorPointer>→</S.ColorPointer>
             </S.EndChatButton>
