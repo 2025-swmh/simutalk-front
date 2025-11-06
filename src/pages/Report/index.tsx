@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ interface Report {
 const Report = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const stateSessionId = location.state?.sessionId;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Report = () => {
   const { data, isLoading, isError, error } = useQuery<Report[]>({
     queryKey: ['reports', stateSessionId],
     queryFn: async () => {
-      const res = await basicApi.get<Report[]>('/reports');
+      const res = await basicApi.get<Report[]>(`/report/list?sessionId=${stateSessionId}`);
       return res.data;
     },
     refetchOnWindowFocus: false,
