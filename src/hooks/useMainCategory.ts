@@ -37,11 +37,11 @@ export const useMainCategory = () => {
       await sessionApi.setTemplate(sessionId, template);
       console.log('Template set successfully:', template);
 
-      // Navigate to chat with scenario
+      // Navigate to chat with scenario (only if provided)
       navigate('/chat', {
         state: {
           sessionId,
-          scenario: scenario || template,
+          scenario: scenario || null,
         },
       });
     } catch (error) {
@@ -130,7 +130,22 @@ export const useMainCategory = () => {
     setCustomDescription('');
   };
 
+  const handleBackButton = () => {
+    if (showCustomForm) {
+      // 커스텀 폼에서 뒤로가기
+      setShowCustomForm(false);
+    } else if (selectedInterviewType === 'tech') {
+      // 기술 면접 카테고리에서 뒤로가기
+      setSelectedInterviewType(null);
+    } else if (selectedCategory) {
+      // 서브 카테고리에서 메인 카테고리로
+      setSelectedCategory(null);
+      setCustomRole(''); // 역할 입력 초기화
+    }
+  };
+
   const isGridLayout = selectedCategory === 'interview' && selectedInterviewType === 'tech';
+  const showBackButton = selectedCategory !== null || showCustomForm;
 
   return {
     selectedCategory,
@@ -140,11 +155,13 @@ export const useMainCategory = () => {
     customTitle,
     customDescription,
     isGridLayout,
+    showBackButton,
     handleMainCategoryClick,
     handleSubCategoryClick,
     handleTechInterviewClick,
     handlePracticeButtonClick,
     handleSubmit,
+    handleBackButton,
     setCustomRole,
     setCustomTitle,
     setCustomDescription,

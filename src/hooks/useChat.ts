@@ -18,13 +18,13 @@ export const useChat = ({ sessionId: stateSessionId, scenario }: UseChatParams) 
   const [sessionId, setSessionId] = useState<string>('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Validate session and scenario
+  // Validate session
   useEffect(() => {
-    if (!stateSessionId || !scenario) {
+    if (!stateSessionId) {
       toast.error(ERROR_MESSAGES.INVALID_ACCESS);
       navigate('/main');
     }
-  }, [stateSessionId, scenario, navigate]);
+  }, [stateSessionId, navigate]);
 
   // Start chat query
   const {
@@ -33,14 +33,18 @@ export const useChat = ({ sessionId: stateSessionId, scenario }: UseChatParams) 
     isError: isStartError,
   } = useQuery({
     queryKey: ['startChat', stateSessionId, scenario],
-    queryFn: () =>
-      chatApi.startChat({
+    queryFn: () => {
+      const request: { session_id: string; scenario?: string } = {
         session_id: stateSessionId!,
-        scenario: scenario!,
-      }),
+      };
+      if (scenario) {
+        request.scenario = scenario;
+      }
+      return chatApi.startChat(request);
+    },
     refetchOnWindowFocus: false,
     retry: 1,
-    enabled: !!stateSessionId && !!scenario,
+    enabled: !!stateSessionId,
   });
 
   // Handle start chat data

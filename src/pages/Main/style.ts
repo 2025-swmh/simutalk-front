@@ -11,8 +11,45 @@ export const MainContainer = styled.main<{ isGrid?: boolean; showCustomForm?: bo
   align-items: center;
   gap: ${({ showCustomForm }) => (showCustomForm ? '3.125rem' : '2.5rem')};
   box-sizing: border-box;
+  position: relative;
   ${theme.animations.fadeIn}
   animation: fadeIn 0.6s ease-out;
+`;
+
+export const BackButton = styled.button`
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: ${theme.color.white};
+  color: ${theme.color.zinc[700]};
+  border: 2px solid ${theme.color.zinc[200]};
+  border-radius: 0.75rem;
+  ${theme.font.body2};
+  font-weight: 500;
+  cursor: pointer;
+  transition: all ${theme.transitions.normal};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: ${theme.shadows.subtle};
+
+  &:hover {
+    background-color: ${theme.color.zinc[50]};
+    border-color: ${theme.color.orange[400]};
+    color: ${theme.color.zinc[800]};
+    box-shadow: ${theme.shadows.medium};
+    transform: translateX(-2px);
+  }
+
+  &:active {
+    transform: translateX(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${theme.color.orange[300]};
+    outline-offset: 2px;
+  }
 `;
 
 export const Title = styled.h1`

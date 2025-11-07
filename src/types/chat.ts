@@ -6,7 +6,7 @@ export interface ChatMessage {
 
 export interface StartChatRequest {
   session_id: string;
-  scenario: string;
+  scenario?: string;
 }
 
 export interface StartChatResponse {

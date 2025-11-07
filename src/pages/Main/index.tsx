@@ -13,11 +13,13 @@ const Main = () => {
     customTitle,
     customDescription,
     isGridLayout,
+    showBackButton,
     handleMainCategoryClick,
     handleSubCategoryClick,
     handleTechInterviewClick,
     handlePracticeButtonClick,
     handleSubmit,
+    handleBackButton,
     setCustomRole,
     setCustomTitle,
     setCustomDescription,
@@ -67,6 +69,7 @@ const Main = () => {
 
   return (
     <S.MainContainer isGrid={isGridLayout} showCustomForm={showCustomForm}>
+      {showBackButton && <S.BackButton onClick={handleBackButton}>← 뒤로가기</S.BackButton>}
       <S.Title>{getPageTitle(showCustomForm, selectedCategory, selectedInterviewType)}</S.Title>
       <S.MenuContainer>
         {showCustomForm ? (
