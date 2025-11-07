@@ -36,6 +36,7 @@ const ReportSynergy = ({ icon, title, description }: Props) => {
       paddingTop={32}
       paddingBottom={48}
       paddingLeft={20}
+      paddingRight={40}
       flexDirection="column"
     >
       <S.Wrapper>
